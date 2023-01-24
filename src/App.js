@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -49,6 +49,7 @@ export default function App() {
         return null;
     }
   };
+
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
@@ -76,8 +77,11 @@ export default function App() {
               element={
                 <Quiz
                   name={name}
+                  setName={setName}
                   selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
                   difficulty={difficulty}
+                  setDifficulty={setDifficulty}
                   CategoryName={CategoryName}
                   score={score}
                   setScore={setScore}
@@ -88,7 +92,14 @@ export default function App() {
             <Route
               path="/result"
               exact
-              element={<Result score={score} />}
+              element={
+                <Result
+                  score={score}
+                  setName={setName}
+                  setSelectedCategory={setSelectedCategory}
+                  setDifficulty={setDifficulty}
+                />
+              }
             ></Route>
           </Routes>
           <Footer />
@@ -99,7 +110,6 @@ export default function App() {
 }
 
 const Wrapper = styled.div`
-  // background: linear-gradient(to right, #80ffdb, #5390d9);
-  background: fff;
+  background: #fff;
   height: 100vh;
 `;

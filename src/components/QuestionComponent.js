@@ -11,6 +11,7 @@ function QuestionComponent({
   onNext,
   setOptions,
   setScore,
+  onQuit,
 }) {
   const [error, setError] = useState(null);
 
@@ -87,7 +88,7 @@ function QuestionComponent({
             variant="contained"
             color="primary"
             size="large"
-            onClick={() => navigate("/")}
+            onClick={onQuit}
           >
             Quit
           </StyledButton>

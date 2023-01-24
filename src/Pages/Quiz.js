@@ -8,8 +8,11 @@ import { useNavigate } from "react-router-dom";
 
 function Quiz({
   name,
+  setName,
   selectedCategory,
+  setSelectedCategory,
   difficulty,
+  setDifficulty,
   CategoryName,
   score,
   setScore,
@@ -41,6 +44,13 @@ function Quiz({
       },
     }
   );
+
+  const onQuit = () => {
+    setName("");
+    setSelectedCategory("");
+    setDifficulty("");
+    navigate("/");
+  };
 
   const onNext = () => {
     if (count < 10) {
@@ -86,6 +96,7 @@ function Quiz({
             correctAnswer={currentQuestion?.correctAnswer}
             onNext={onNext}
             setScore={setScore}
+            onQuit={onQuit}
           />
         </>
       ) : (
