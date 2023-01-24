@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -18,15 +18,65 @@ const queryClient = new QueryClient({
 });
 
 export default function App() {
+  const [name, setName] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [difficulty, setDifficulty] = useState("");
+
+  const CategoryName = (cat) => {
+    switch (cat) {
+      case "Arts & Literature":
+        return "arts_and_literature";
+      case "Film & TV":
+        return "film_and_tv";
+      case "Food & Drink":
+        return "food_and_drink";
+      case "General Knowledge":
+        return "general_knowledge";
+      case "Geography":
+        return "geography";
+      case "History":
+        return "history";
+      case "Music":
+        return "music";
+      case "Science":
+        return "science";
+      case "Society & Culture":
+        return "society_and_culture";
+      case "Sport & Leisure":
+        return "sport_and_leisure";
+    }
+  };
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
         <Wrapper>
           <Header />
           <Routes>
-            <Route path="/" exact element={<Home />}></Route>
+            <Route
+              path="/"
+              exact
+              element={
+                <Home
+                  name={name}
+                  setName={setName}
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
+                  difficulty={difficulty}
+                  setDifficulty={setDifficulty}
+                />
+              }
+            ></Route>
 
-            <Route path="/quiz" exact element={<Quiz />}></Route>
+            <Route
+              path="/quiz"
+              exact
+              element={
+                <Quiz
+                  selectedCategory={CategoryName(selectedCategory)}
+                  difficulty={difficulty}
+                />
+              }
+            ></Route>
 
             <Route path="/result" exact element={<Result />}></Route>
           </Routes>

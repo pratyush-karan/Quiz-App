@@ -3,32 +3,86 @@ import styled from "styled-components";
 import { TextField, MenuItem } from "@mui/material";
 import { useQuery, useQueryClient } from "react-query";
 import categoryService from "../Services/categoryService";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
-function Home() {
+function Home({
+  name,
+  setName,
+  selectedCategory,
+  setSelectedCategory,
+  difficulty,
+  setDifficulty,
+}) {
   const { data: categories, isSuccess } = useQuery("categories", () =>
     categoryService.getCategories()
   );
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  let navigate = useNavigate();
+
+  const [error, setError] = useState(false);
   const queryClient = useQueryClient();
+
+  const handleSubmit = () => {
+    if (!selectedCategory || !difficulty || !name) {
+      setError(true);
+      return;
+    } else {
+      setError(false);
+      navigate("/quiz");
+    }
+  };
 
   return (
     <React.Fragment>
       {isSuccess && (
         <Wrapper>
           <FormContainer>
-            <StyledTextField label="Enter Your Name" variant="outlined" />
-            <StyledTextField select label="Select Category" variant="outlined">
-              {Object.keys(categories?.data).map((category, index) => (
-                <MenuItem
-                  key={index}
-                  value={category ? category : "Select your Category"}
-                  onClick={() => setSelectedCategory(category)}
-                >
+            <StyledTextField
+              label="Enter Your Name"
+              variant="outlined"
+              onChange={(e) => setName(e.target.value)}
+            />
+            <StyledTextField
+              select
+              label="Select Category"
+              variant="outlined"
+              defaultValue={"General Knowledge"}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              value={selectedCategory}
+            >
+              {categories?.map((category) => (
+                <MenuItem key={category} value={category}>
                   {category}
                 </MenuItem>
               ))}
             </StyledTextField>
+            <StyledTextField
+              select
+              label="Select Diffculty"
+              value={difficulty}
+              onChange={(e) => setDifficulty(e.target.value)}
+              variant="outlined"
+            >
+              <MenuItem key="Easy" value="easy">
+                Easy
+              </MenuItem>
+              <MenuItem key="Medium" value="medium">
+                Medium
+              </MenuItem>
+              <MenuItem key="Hard" value="hard">
+                Hard
+              </MenuItem>
+            </StyledTextField>
+            {error && <ErrorMessage>Please Fill all the fields</ErrorMessage>}
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={handleSubmit}
+            >
+              Start Quiz
+            </Button>
           </FormContainer>
           <StyledImage src="/quiz-app.png" />
         </Wrapper>
@@ -38,6 +92,10 @@ function Home() {
 }
 
 export default Home;
+
+const ErrorMessage = styled.div`
+  color: red;
+`;
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 30px;

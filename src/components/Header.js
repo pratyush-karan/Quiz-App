@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <Container>
-      <StyledLink to="/">Intuitive Quiz Hub</StyledLink>
+      <StyledLink to="/">Quiz App</StyledLink>
       <StyledHr />
     </Container>
   );
