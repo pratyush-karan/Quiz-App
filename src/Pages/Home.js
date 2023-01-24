@@ -37,7 +37,6 @@ function Home({
     <React.Fragment>
       {isSuccess && (
         <Wrapper>
-          {console.log(name, selectedCategory, difficulty)}
           <FormContainer>
             <StyledTextField
               label="Enter Your Name"

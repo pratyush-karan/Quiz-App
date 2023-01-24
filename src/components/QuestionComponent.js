@@ -60,10 +60,7 @@ function QuestionComponent({
   };
 
   return (
-    <div>
-      {console.log("options", options)}
-      {console.log("correct answer", correctAnswer)}
-
+    <React.Fragment>
       <QuestionNumber>
         Question : {currentQuestion?.questionNumber}
       </QuestionNumber>
@@ -110,7 +107,7 @@ function QuestionComponent({
         </ButtonContainer>
         {error && <ErrorMessage>{error}</ErrorMessage>}
       </QuestionCard>
-    </div>
+    </React.Fragment>
   );
 }
 
