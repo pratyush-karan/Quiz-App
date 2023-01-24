@@ -37,17 +37,18 @@ function Home({
     <React.Fragment>
       {isSuccess && (
         <Wrapper>
+          {console.log(name, selectedCategory, difficulty)}
           <FormContainer>
             <StyledTextField
               label="Enter Your Name"
               variant="outlined"
+              value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <StyledTextField
               select
               label="Select Category"
               variant="outlined"
-              defaultValue={"General Knowledge"}
               onChange={(e) => setSelectedCategory(e.target.value)}
               value={selectedCategory}
             >
@@ -75,14 +76,14 @@ function Home({
               </MenuItem>
             </StyledTextField>
             {error && <ErrorMessage>Please Fill all the fields</ErrorMessage>}
-            <Button
+            <StyledButton
               variant="contained"
               color="primary"
               size="large"
               onClick={handleSubmit}
             >
               Start Quiz
-            </Button>
+            </StyledButton>
           </FormContainer>
           <StyledImage src="/quiz-app.png" />
         </Wrapper>
@@ -95,6 +96,9 @@ export default Home;
 
 const ErrorMessage = styled.div`
   color: red;
+`;
+const StyledButton = styled(Button)`
+  background-color: rgb(118, 181, 197);
 `;
 
 const StyledTextField = styled(TextField)`

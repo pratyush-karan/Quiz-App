@@ -85,7 +85,11 @@ export default function App() {
               }
             ></Route>
 
-            <Route path="/result" exact element={<Result />}></Route>
+            <Route
+              path="/result"
+              exact
+              element={<Result score={score} />}
+            ></Route>
           </Routes>
           <Footer />
         </Wrapper>

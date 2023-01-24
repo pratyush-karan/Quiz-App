@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import questionService from "../Services/questionService";
 import { CircularProgress } from "@mui/material";
 import QuestionComponent from "../components/QuestionComponent";
+import { useNavigate } from "react-router-dom";
 
 function Quiz({
   name,
@@ -15,6 +16,8 @@ function Quiz({
 }) {
   const [options, setOptions] = useState();
   const [currentQuestion, setCurrentQuestion] = useState();
+  const [count, setCount] = useState(1);
+  let navigate = useNavigate();
 
   const { data: questions } = useQuery(
     "question-list",
@@ -25,16 +28,36 @@ function Quiz({
         difficulty: difficulty,
       }),
     {
+      refetchOnMount: true,
       onSuccess: (res) => {
         setCurrentQuestion(res[0]);
         setOptions(
-          handleShuffle([...res[0].incorrectAnswers, res[0].correctAnswer])
+          handleShuffle([...res[0].incorrectAnswers, res[0].correctAnswer]).map(
+            (e) => {
+              return { optionText: e };
+            }
+          )
         );
       },
     }
   );
 
-  const onNext = () => {};
+  const onNext = () => {
+    if (count < 10) {
+      setCurrentQuestion(questions[count]);
+      setOptions(
+        handleShuffle([
+          ...questions[count].incorrectAnswers,
+          questions[count].correctAnswer,
+        ]).map((e) => {
+          return { optionText: e };
+        })
+      );
+      setCount((prevState) => prevState + 1);
+    } else {
+      navigate("/result");
+    }
+  };
 
   const handleShuffle = (answerOptions) => {
     return answerOptions.sort(() => Math.random() - 0.5);
@@ -59,8 +82,10 @@ function Quiz({
           <QuestionComponent
             currentQuestion={currentQuestion}
             options={options}
-            correctAnswer={currentQuestion.correctAnswer}
+            setOptions={setOptions}
+            correctAnswer={currentQuestion?.correctAnswer}
             onNext={onNext}
+            setScore={setScore}
           />
         </>
       ) : (
