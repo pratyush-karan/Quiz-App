@@ -21,6 +21,7 @@ export default function App() {
   const [name, setName] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [difficulty, setDifficulty] = useState("");
+  const [score, setScore] = useState(0);
 
   const CategoryName = (cat) => {
     switch (cat) {
@@ -44,6 +45,8 @@ export default function App() {
         return "society_and_culture";
       case "Sport & Leisure":
         return "sport_and_leisure";
+      default:
+        return null;
     }
   };
   return (
@@ -72,8 +75,12 @@ export default function App() {
               exact
               element={
                 <Quiz
-                  selectedCategory={CategoryName(selectedCategory)}
+                  name={name}
+                  selectedCategory={selectedCategory}
                   difficulty={difficulty}
+                  CategoryName={CategoryName}
+                  score={score}
+                  setScore={setScore}
                 />
               }
             ></Route>
