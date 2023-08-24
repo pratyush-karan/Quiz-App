@@ -79,15 +79,15 @@ function Quiz({
       {questions ? (
         <>
           <QuizInfo>
-            <span>
+            <Category>
               <b>Category:</b> {selectedCategory}
-            </span>
-            <span>
+            </Category>
+            <Difficulty>
               <b>Difficulty:</b> {difficulty}
-            </span>
-            <span>
+            </Difficulty>
+            <Score>
               <b>Score:</b> {score}
-            </span>
+            </Score>
           </QuizInfo>
           <QuestionComponent
             currentQuestion={currentQuestion}
@@ -100,7 +100,9 @@ function Quiz({
           />
         </>
       ) : (
-        <StyledCircularProgress size={150} thickness={1} />
+        <SpinnerContainer>
+          <StyledCircularProgress size={150} thickness={1} />
+        </SpinnerContainer>
       )}
     </div>
   );
@@ -111,6 +113,11 @@ export default Quiz;
 const StyledCircularProgress = styled(CircularProgress)`
   margin: 100px;
   color: #2596be;
+`;
+
+const SpinnerContainer = styled.div`
+  width: fit-content;
+  margin: auto;
 `;
 
 const WelcomeHeader = styled.div`
@@ -124,10 +131,22 @@ const WelcomeHeader = styled.div`
   text-align: center;
 `;
 const QuizInfo = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row;
-  justify-content: space-around;
   padding: 10px;
-  margin: 10px;
+  margin: 10px 30px 10px 30px;
+  display: flex;
+`;
+
+const Category = styled.span`
+  flex-basis: 30%;
+  text-align: left;
+`;
+
+const Difficulty = styled.span`
+  flex-basis: 40%;
+  text-align: center;
+`;
+
+const Score = styled.span`
+  flex-basis: 30%;
+  text-align: right;
 `;

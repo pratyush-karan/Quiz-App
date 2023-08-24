@@ -49,9 +49,9 @@ function QuestionComponent({
   const handleColor = (evaluation) => {
     switch (evaluation) {
       case "correct":
-        return "#42f563";
+        return "#0f7c23";
       case "incorrect":
-        return "#f54242";
+        return "#b90f0f";
       case "not-selected":
         return "inherit";
       default:
@@ -72,7 +72,13 @@ function QuestionComponent({
               <Option
                 onClick={() => handleSelect(option)}
                 disabled={option?.evaluation ? true : false}
-                color={() => handleColor(option?.evaluation)}
+                color={handleColor(option?.evaluation)}
+                text={
+                  option?.evaluation === "correct" ||
+                  option?.evaluation === "incorrect"
+                    ? "white"
+                    : "black"
+                }
               >
                 {option.optionText}
               </Option>
@@ -114,7 +120,7 @@ function QuestionComponent({
 export default QuestionComponent;
 
 const StyledButton = styled(Button)`
-  background-color: rgb(118, 181, 197) !important;
+  background-color: #012d5e !important;
   width: 200px;
 `;
 
@@ -166,4 +172,5 @@ const Option = styled.button`
   width: 100%;
   padding: 5px;
   background-color: ${(props) => props.color};
+  color: ${(props) => props.text};
 `;
